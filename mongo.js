@@ -94,7 +94,56 @@ const deleteProfileById = async (req, res, next) => {
   res.json({ message: `successfully delete user with id ${profileId}` });
 }
 
+const editProfile = async (req, res, next) => {
+  const profileId = req.params.pid; 
+  const client = new MongoClient(dbUrl, { useUnifiedTopology: true });
+  const {
+    id,
+    Name,
+    LastName,
+    Email,
+    DirectionId,
+    Sex,
+    Education,
+    BirthDate,
+    UniversityAverageScore,
+    MathScore,
+    Address,
+    MobilePhone,
+    Skype,
+    StartDate
+  }
+   = req.body;
+  const newProfile = {
+    id,
+    Name,
+    LastName,
+    Email,
+    DirectionId,
+    Sex,
+    Education,
+    BirthDate,
+    UniversityAverageScore,
+    MathScore,
+    Address,
+    MobilePhone,
+    Skype,
+    StartDate,
+  };
+  try {
+    await client.connect();
+    const db = client.db();
+    await db.collection('profiles').update({_id: new ObjectID(profileId)}, newProfile)
+  } catch (error) {
+    return res.json({ message: 'oops' });
+  }
+
+  client.close();
+  res.json({ message: `successfully update user with id ${profileId}` });
+}
+
 exports.createProfile = createProfile;
 exports.getProfiles = getProfiles;
 exports.getProfileById = getProfileById;
 exports.deleteProfileById = deleteProfileById;
+exports.editProfile = editProfile;

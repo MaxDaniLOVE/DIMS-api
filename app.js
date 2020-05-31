@@ -20,6 +20,8 @@ app.get('/api/profile/:pid', dimsMongo.getProfileById);
 
 app.delete('/api/profile/delete/:pid', dimsMongo.deleteProfileById);
 
+app.put('/api/profile/edit/:pid', dimsMongo.editProfile);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
