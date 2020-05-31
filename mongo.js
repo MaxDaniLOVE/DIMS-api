@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-
+const ObjectID = require('mongodb').ObjectID;
 const dbUrl = process.env.API_KEY;
 
 const createProfile = async (req, res, next) => {
@@ -78,6 +78,23 @@ const getProfileById = async (req, res, next) => {
   res.json(profile);
 }
 
+const deleteProfileById = async (req, res, next) => {
+  const profileId = req.params.pid; 
+  const client = new MongoClient(dbUrl, { useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const db = client.db();
+    await db.collection('profiles').deleteOne({_id: new ObjectID(profileId)})
+  } catch (error) {
+    return res.json({ message: 'oops' });
+  }
+
+  client.close();
+  res.json({ message: `successfully delete user with id ${profileId}` });
+}
+
 exports.createProfile = createProfile;
 exports.getProfiles = getProfiles;
 exports.getProfileById = getProfileById;
+exports.deleteProfileById = deleteProfileById;
