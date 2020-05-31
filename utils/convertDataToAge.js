@@ -4,4 +4,4 @@ const convertDataToAge = (data) => {
   return new Date(ageMs).getFullYear() - 1970;
 };
 
-exports.convertDataToAge = convertDataToAge;
+module.exports = convertDataToAge;

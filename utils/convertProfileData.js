@@ -1,8 +1,8 @@
-const convertDataToAge = require('./convertDataToAge').convertDataToAge;
+const convertDataToAge = require('./convertDataToAge');
 
 const convertProfileData = (profile) => {
-  const { _id, Name, LastName, BirthDate, ...data } = profile;
+  const { _id, Name, LastName, BirthDate, __v, ...data } = profile._doc;
   return { UserId: _id, FullName: Name + ' ' + LastName, Age: convertDataToAge(BirthDate), ...data };
 }
 
-exports.convertProfileData = convertProfileData;
+module.exports = convertProfileData;
