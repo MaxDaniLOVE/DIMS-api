@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const dbUrl = process.env.API_KEY;
+const convertProfileData = require('./utils/convertProfileData').convertProfileData;
 
 const createProfile = async (req, res, next) => {
   const {
@@ -53,7 +54,7 @@ const getProfiles = async (req, res, next) => {
     await client.connect();
     const db = client.db();
     const allProfiles = await db.collection('profiles').find().toArray();
-    profiles = allProfiles.map(({ _id, Name, LastName, ...data }) => ({ UserId: _id, FullName: Name + ' ' + LastName, Age: 100, ...data }));
+    profiles = allProfiles.map((profile) => convertProfileData(profile));
   } catch (error) {
     return res.json({ message: 'oops' });
   }
@@ -69,8 +70,7 @@ const getProfileById = async (req, res, next) => {
     await client.connect();
     const db = client.db();
     const profileArray = await db.collection('profiles').find(profileId).toArray();
-    const { _id: UserId, ...data } = profileArray[0];
-    profile = { UserId, ...data };
+    profile = convertProfileData(profileArray[0]);
   } catch (error) {
     return res.json({ message: 'oops' });
   }

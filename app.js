@@ -16,6 +16,8 @@ app.post('/api/create', dimsMongo.createProfile)
 
 app.get('/api/profiles', dimsMongo.getProfiles);
 
+app.get('/api/profile/:pid', dimsMongo.getProfileById);
+
 app.delete('/api/profile/delete/:pid', dimsMongo.deleteProfileById);
 
 const port = process.env.PORT || 5000;
