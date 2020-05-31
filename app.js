@@ -11,6 +11,8 @@ app.get('/api/profiles', dimsMongo.getProfiles);
 
 app.delete('/api/profile/delete/:pid', dimsMongo.deleteProfileById);
 
-app.listen(5000, () => {
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
   console.log('http://localhost:5000/api/')
 })
