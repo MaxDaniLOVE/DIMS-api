@@ -52,7 +52,8 @@ const getProfiles = async (req, res, next) => {
   try {
     await client.connect();
     const db = client.db();
-    profiles = await db.collection('profiles').find().toArray();
+    const allProfiles = await db.collection('profiles').find().toArray();
+    profiles = allProfiles.map(({ _id, ...data  }) => ({ UserId: _id, ...data }));
   } catch (error) {
     return res.json({ message: 'oops' });
   }
