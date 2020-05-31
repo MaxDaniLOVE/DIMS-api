@@ -61,5 +61,23 @@ const getProfiles = async (req, res, next) => {
   res.json(profiles);
 };
 
+const getProfileById = async (req, res, next) => {
+  const profileId = req.params.pid; 
+  const client = new MongoClient(dbUrl, { useUnifiedTopology: true });
+  let profile;
+  try {
+    await client.connect();
+    const db = client.db();
+    const profileArray = await db.collection('profiles').find(profileId).toArray();
+    const { _id: UserId, ...data } = profileArray[0];
+    profile = { UserId, ...data };
+  } catch (error) {
+    return res.json({ message: 'oops' });
+  }
+  client.close();
+  res.json(profile);
+}
+
 exports.createProfile = createProfile;
 exports.getProfiles = getProfiles;
+exports.getProfileById = getProfileById;
