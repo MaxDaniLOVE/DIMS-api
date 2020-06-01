@@ -36,6 +36,10 @@ const addTaskToUser  = async (req, res, next) => {
   const usersIds = req.body;
   const { _doc: { Name: TaskName, _id, __v, ...data } } = await Task.findById(TaskId).exec();
   usersIds.map(async (UserId) => {
+    const isExists = await UserTask.exists({ TaskId });
+    if (isExists) {
+      return null;
+    }
     const createdUserTask = new UserTask({ UserId, TaskId, TaskName, StatusId: 1, ...data });
     await createdUserTask.save();
   })
