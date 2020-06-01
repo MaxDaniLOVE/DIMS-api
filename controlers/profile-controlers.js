@@ -1,11 +1,5 @@
-const mongoose = require('mongoose');
 const convertProfileData = require('../utils/convertProfileData');
 const Profile = require('../models/profile');
-
-mongoose
-  .connect(process.env.API_KEY, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log('connected to db'))
-  .catch(() => console.log('connection failed'));
 
 const createProfile  = async (req, res, next) => {
   const {

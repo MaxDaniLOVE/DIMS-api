@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const Task = require('../models/task');
 const convertTaskData = require('../utils/convertTaskData')
 
-
-mongoose
-  .connect(process.env.API_KEY, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log('connected to db'))
-  .catch(() => console.log('connection failed'));
-
 const createTask  = async (req, res, next) => {
   const {
     Name,
@@ -48,9 +42,9 @@ const deleteTaskById = async (req, res, next) => {
 };
 
 const editTask = async (req, res, next) => {
-  const taskId = req.params.tid; 
-  await Task.findByIdAndUpdate(taskId, req.body);
-  res.json({ message: `successfully update task with id ${taskId}` });
+  const { TaskId, ...updatedData } = req.body;
+  await Task.findByIdAndUpdate(TaskId, updatedData);
+  res.json({ message: `successfully update task with id ${TaskId}` });
 };
 
 exports.createTask = createTask;

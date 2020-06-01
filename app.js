@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const profileControlers = require('./controlers/profile-controlers');
 const taskControlers = require('./controlers/task-controlers');
 
@@ -34,10 +35,15 @@ app.get('/api/task/:tid', taskControlers.getTaskById);
 
 app.delete('/api/task/delete/:tid', taskControlers.deleteTaskById);
 
-app.put('/api/task/edit/:tid', taskControlers.editTask);
+app.put('/api/task/edit', taskControlers.editTask);
 
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log('http://localhost:5000/api/')
-})
+});
+
+mongoose
+  .connect(process.env.API_KEY, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => console.log('connected to db'))
+  .catch(() => console.log('connection failed'));
