@@ -3,10 +3,20 @@ const Task = require('../models/task');
 const convertUserTaskData = require('../utils/convertUserTaskData');
 
 const getUserTasks = async (req, res, next) => {
-  const recievedId = req.params.pid; 
-  const tasks = await UserTask.find({ UserId: recievedId }).exec();
-  const convertedTasks = tasks.map((task) => convertUserTaskData(task));
-  res.json(convertedTasks);
+  const UserId = req.params.pid; 
+  const tasks = await UserTask.find({ UserId }).exec();
+
+  const convertedTasks = tasks.map(async ({ _doc: { TaskId, ...userTaskData } }) => {
+    const taskData = await Task.findById(TaskId).exec();
+    const { Name: TaskName, ...data } = taskData._doc;
+    const fullTaskData = { TaskName, UserId, TaskId, ...data, ...userTaskData };
+    const convertedTask = convertUserTaskData(fullTaskData);
+    return convertedTask;
+  });
+
+  const userTasks = await Promise.all(convertedTasks);
+
+  res.json(userTasks);
 };
 
 const setTaskStatus = async (req, res, next) => {
