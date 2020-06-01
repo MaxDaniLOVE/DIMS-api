@@ -42,7 +42,7 @@ const createProfile  = async (req, res, next) => {
 
   const result = await createdProfile.save();
 
-  res.json(result);
+  res.json(convertProfileData(result));
 };
 
 const getProfiles = async (req, res, next) => {

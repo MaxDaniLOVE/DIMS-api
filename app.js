@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 // ! PROFILES
-app.post('/api/create', profileControlers.createProfile)
+app.post('/api/create', profileControlers.createProfile);
 
 app.get('/api/profiles', profileControlers.getProfiles);
 
@@ -26,9 +26,15 @@ app.delete('/api/profile/delete/:pid', profileControlers.deleteProfileById);
 app.put('/api/profile/edit/:pid', profileControlers.editProfile);
 
 // ! TASKS
-app.post('/api/task/create', taskControlers.createTask)
+app.post('/api/task/create', taskControlers.createTask);
 
 app.get('/api/tasks', taskControlers.getTasks);
+
+app.get('/api/task/:tid', taskControlers.getTaskById);
+
+app.delete('/api/task/delete/:tid', taskControlers.deleteTaskById);
+
+app.put('/api/task/edit/:tid', taskControlers.editTask);
 
 const port = process.env.PORT || 5000;
 

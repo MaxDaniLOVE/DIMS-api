@@ -26,7 +26,7 @@ const createTask  = async (req, res, next) => {
 
   const result = await createdTask.save();
 
-  res.json(result);
+  res.json(convertTaskData(result));
 };
 
 const getTasks = async (req, res, next) => {
@@ -35,5 +35,26 @@ const getTasks = async (req, res, next) => {
   res.json(convertedTasks);
 };
 
+const getTaskById = async (req, res, next) => {
+  const taskId = req.params.tid; 
+  const task = await Task.findById(taskId).exec();
+  res.json(convertTaskData(task));
+};
+
+const deleteTaskById = async (req, res, next) => {
+  const taskId = req.params.tid; 
+  await Task.findByIdAndDelete(taskId);
+  res.json({ message: `successfully delete task with id ${taskId}` });
+};
+
+const editTask = async (req, res, next) => {
+  const taskId = req.params.tid; 
+  await Task.findByIdAndUpdate(taskId, req.body);
+  res.json({ message: `successfully update task with id ${taskId}` });
+};
+
 exports.createTask = createTask;
 exports.getTasks = getTasks;
+exports.getTaskById = getTaskById;
+exports.deleteTaskById = deleteTaskById;
+exports.editTask = editTask;
