@@ -6,7 +6,7 @@ const convertProfileData = (profile) => {
   return {
     UserId: _id,
     FullName: `${Name} ${LastName}`,
-    DirectionId: directions[DirectionId],
+    Direction: directions[DirectionId],
     Age: convertDataToAge(BirthDate),
     ...data
   };

@@ -47,8 +47,8 @@ const getProfiles = async (req, res, next) => {
 
 const getProfileById = async (req, res, next) => {
   const profileId = req.params.pid; 
-  const profile = await Profile.findById(profileId).exec();
-  res.json(convertProfileData(profile));
+  const { _doc: { _id: UserId, __v, ...data } } = await Profile.findById(profileId).exec();
+  res.json({ UserId, ...data });
 };
 
 const deleteProfileById = async (req, res, next) => {
@@ -63,8 +63,15 @@ const editProfile = async (req, res, next) => {
   res.json({ message: `successfully update user with id ${profileId}` });
 };
 
+const getProfileDetails = async (req, res, next) => {
+  const profileId = req.params.pid; 
+  const profile = await Profile.findById(profileId).exec();
+  res.json(convertProfileData(profile));
+};
+
 exports.createProfile = createProfile;
 exports.getProfiles = getProfiles;
 exports.getProfileById = getProfileById;
 exports.deleteProfileById = deleteProfileById;
 exports.editProfile = editProfile;
+exports.getProfileDetails = getProfileDetails;

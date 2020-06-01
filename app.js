@@ -26,6 +26,8 @@ app.delete('/api/profile/delete/:pid', profileControlers.deleteProfileById);
 
 app.put('/api/profile/edit/:pid', profileControlers.editProfile);
 
+app.get('/api/profile/details/:pid', profileControlers.getProfileDetails);
+
 // ! TASKS
 app.post('/api/task/create', taskControlers.createTask);
 
