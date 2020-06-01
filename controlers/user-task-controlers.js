@@ -29,4 +29,12 @@ const createUserTask  = async (req, res, next) => {
   res.json(convertUserTaskData(result));
 };
 
+const getUserTasks = async (req, res, next) => {
+  const recievedId = req.params.pid; 
+  const tasks = await UserTask.find({ UserId: recievedId }).exec();
+  const convertedTasks = tasks.map((task) => convertUserTaskData(task));
+  res.json(convertedTasks);
+};
+
 exports.createUserTask = createUserTask;
+exports.getUserTasks = getUserTasks;

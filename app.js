@@ -40,8 +40,10 @@ app.delete('/api/task/delete/:tid', taskControlers.deleteTaskById);
 
 app.put('/api/task/edit', taskControlers.editTask);
 
-// ! TASKS
+// ! USER_TASKS
 app.post('/api/user/task/create', userTaskControlers.createUserTask);
+
+app.get('/api/user/tasks/:pid', userTaskControlers.getUserTasks);
 
 const port = process.env.PORT || 5000;
 
