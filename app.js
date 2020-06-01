@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const profileControlers = require('./controlers/profile-controlers');
 const taskControlers = require('./controlers/task-controlers');
+const userTaskControlers = require('./controlers/user-task-controlers');
 
 const app = express();
 
@@ -38,6 +39,9 @@ app.get('/api/task/:tid', taskControlers.getTaskById);
 app.delete('/api/task/delete/:tid', taskControlers.deleteTaskById);
 
 app.put('/api/task/edit', taskControlers.editTask);
+
+// ! TASKS
+app.post('/api/user/task/create', userTaskControlers.createUserTask);
 
 const port = process.env.PORT || 5000;
 
