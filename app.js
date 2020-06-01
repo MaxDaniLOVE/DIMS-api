@@ -41,7 +41,6 @@ app.delete('/api/task/delete/:tid', taskControlers.deleteTaskById);
 app.put('/api/task/edit', taskControlers.editTask);
 
 // ! USER_TASKS
-app.post('/api/user/task/create', userTaskControlers.createUserTask);
 
 app.get('/api/user/tasks/:pid', userTaskControlers.getUserTasks);
 
