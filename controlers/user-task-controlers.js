@@ -36,5 +36,19 @@ const getUserTasks = async (req, res, next) => {
   res.json(convertedTasks);
 };
 
+const setTaskStatus = async (req, res, next) => {
+  const {
+    UserId,
+    TaskId,
+    StatusId,
+  }
+   = req.body;
+  const { _id: UserTaskId } = await UserTask.findOne({ UserId, TaskId }).exec();
+  console.log(UserTaskId)
+  await UserTask.findByIdAndUpdate(UserTaskId, { StatusId });
+  res.json({ message: 'succesfully updated' });
+};
+
 exports.createUserTask = createUserTask;
 exports.getUserTasks = getUserTasks;
+exports.setTaskStatus = setTaskStatus;
