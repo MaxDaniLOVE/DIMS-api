@@ -42,6 +42,17 @@ const addTaskToUser  = async (req, res, next) => {
   res.json({ message: "all users recieve new tasks with status 'Active'" });
 };
 
+const getAssignedUsers  = async (req, res, next) => {
+  const TaskId = req.params.tid;
+
+  const result = await UserTask.find({ TaskId }, 'UserId').exec();
+  
+  const assignedUser = result.map(({ UserId }) => UserId);
+
+  res.json(assignedUser);
+};
+
 exports.getUserTasks = getUserTasks;
 exports.setTaskStatus = setTaskStatus;
 exports.addTaskToUser = addTaskToUser;
+exports.getAssignedUsers = getAssignedUsers;

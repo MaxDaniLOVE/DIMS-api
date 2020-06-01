@@ -48,6 +48,8 @@ app.put('/api/user/task', userTaskControlers.setTaskStatus);
 
 app.post('/api/user/task/add/:tid', userTaskControlers.addTaskToUser);
 
+app.get('/api/task/users/:tid', userTaskControlers.getAssignedUsers);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
