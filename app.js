@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const profileControlers = require('./controlers/profile-controlers');
+const taskControlers = require('./controlers/task-controlers');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -12,6 +14,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// ! PROFILES
 app.post('/api/create', profileControlers.createProfile)
 
 app.get('/api/profiles', profileControlers.getProfiles);
@@ -21,6 +24,11 @@ app.get('/api/profile/:pid', profileControlers.getProfileById);
 app.delete('/api/profile/delete/:pid', profileControlers.deleteProfileById);
 
 app.put('/api/profile/edit/:pid', profileControlers.editProfile);
+
+// ! TASKS
+app.post('/api/task/create', taskControlers.createTask)
+
+app.get('/api/tasks', taskControlers.getTasks);
 
 const port = process.env.PORT || 5000;
 
