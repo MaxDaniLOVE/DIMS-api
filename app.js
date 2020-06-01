@@ -47,6 +47,8 @@ app.get('/api/user/tasks/:pid', userTaskControlers.getUserTasks);
 
 app.put('/api/user/task', userTaskControlers.setTaskStatus);
 
+app.post('/api/user/task/add/:tid', userTaskControlers.addTaskToUser);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
