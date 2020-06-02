@@ -87,7 +87,7 @@ const editProfile = async (req, res, next) => {
   const profileId = req.params.pid;
 
   try {
-    await Profile.findByIdAndUpdate(profileId, req.body);
+    await Profile.findByIdAndUpdate(profileId, req.body, { runValidators: true });
   } catch (error) {
     return next(error);
   }
