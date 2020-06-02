@@ -17,32 +17,64 @@ const createTask  = async (req, res, next) => {
     DeadlineDate,
   });
 
-  const result = await createdTask.save();
+  let result;
+
+  try {
+    result = await createdTask.save();
+  } catch (error) {
+    return next(error);
+  }
 
   res.json(convertTaskData(result));
 };
 
 const getTasks = async (req, res, next) => {
-  const tasks = await Task.find().exec();
+  let tasks;
+
+  try {
+    tasks = await Task.find().exec();
+  } catch (error) {
+    return next(error);
+  }
+  
   const convertedTasks = tasks.map((task) => convertTaskData(task));
   res.json(convertedTasks);
 };
 
 const getTaskById = async (req, res, next) => {
-  const taskId = req.params.tid; 
-  const task = await Task.findById(taskId).exec();
+  const taskId = req.params.tid;
+  let task;
+
+  try {
+    task = await Task.findById(taskId).exec();
+  } catch (error) {
+    return next(error);
+  }
+
   res.json(convertTaskData(task));
 };
 
 const deleteTaskById = async (req, res, next) => {
   const taskId = req.params.tid; 
-  await Task.findByIdAndDelete(taskId);
+
+  try {
+    await Task.findByIdAndDelete(taskId);
+  } catch (error) {
+    return next(error);
+  }
+  
   res.json({ message: `successfully delete task with id ${taskId}` });
 };
 
 const editTask = async (req, res, next) => {
   const { TaskId, ...updatedData } = req.body;
-  await Task.findByIdAndUpdate(TaskId, updatedData);
+
+  try {
+    await Task.findByIdAndUpdate(TaskId, updatedData, { runValidators: true });
+  } catch (error) {
+    return next(error);
+  }
+  
   res.json({ message: `successfully update task with id ${TaskId}` });
 };
 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('mongoose-unique-validator')
 
 const profileSchema = new mongoose.Schema({
   Name: { type: String, required: true, validate: /[A-za-z]{3,}/ },
@@ -16,7 +15,5 @@ const profileSchema = new mongoose.Schema({
   Skype: { type: String, required: true, validate: /.{6,}/ },
   StartDate: { type: String, required: true, validate: /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/ },
 });
-
-profileSchema.plugin(validator);
 
 module.exports = mongoose.model('Profile', profileSchema);
