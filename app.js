@@ -57,6 +57,6 @@ app.listen(port, () => {
 });
 
 mongoose
-  .connect(process.env.API_KEY, { useUnifiedTopology: true, useNewUrlParser: true })
+  .connect(process.env.API_KEY, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false  })
   .then(() => console.log('connected to db'))
   .catch(() => console.log('connection failed'));

@@ -34,38 +34,77 @@ const createProfile  = async (req, res, next) => {
     StartDate
   });
 
-  const result = await createdProfile.save();
+  let result;
+  try {
+    result = await createdProfile.save();
+  } catch (error) {
+    return next(error);
+  };
 
   res.json(convertProfileData(result));
 };
 
 const getProfiles = async (req, res, next) => {
-  const profiles = await Profile.find().exec(); // ! .exec returns Promise
+  let profiles;
+
+  try {
+    profiles = await Profile.find().exec(); // ! .exec returns Promise
+  } catch (error) {
+    return next(error);
+  };
+ 
   const convertedProfiles = profiles.map((profile) => convertProfileData(profile));
   res.json(convertedProfiles);
 };
 
 const getProfileById = async (req, res, next) => {
   const profileId = req.params.pid; 
-  const { _doc: { _id: UserId, __v, ...data } } = await Profile.findById(profileId).exec();
+
+  let userData;
+  try {
+    userData = await Profile.findById(profileId).exec();
+  } catch (error) {
+    return next(error);
+  };
+
+  const { _doc: { _id: UserId, __v, ...data } } = userData;
   res.json({ UserId, ...data });
 };
 
 const deleteProfileById = async (req, res, next) => {
-  const profileId = req.params.pid; 
-  await Profile.findByIdAndDelete(profileId);
+  const profileId = req.params.pid;
+
+  try {
+    await Profile.findByIdAndDelete(profileId);
+  } catch (error) {
+    return next(error);
+  };
+ 
   res.json({ message: `successfully delete user with id ${profileId}` });
 };
 
 const editProfile = async (req, res, next) => {
-  const profileId = req.params.pid; 
-  await Profile.findByIdAndUpdate(profileId, req.body);
+  const profileId = req.params.pid;
+
+  try {
+    await Profile.findByIdAndUpdate(profileId, req.body);
+  } catch (error) {
+    return next(error);
+  }
+  
   res.json({ message: `successfully update user with id ${profileId}` });
 };
 
 const getProfileDetails = async (req, res, next) => {
   const profileId = req.params.pid; 
-  const profile = await Profile.findById(profileId).exec();
+  let profile;
+
+  try {
+    profile = await Profile.findById(profileId).exec();
+  } catch (error) {
+    return next(error);
+  };
+
   res.json(convertProfileData(profile));
 };
 
