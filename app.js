@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const profileControlers = require('./controlers/profile-controlers');
 const taskControlers = require('./controlers/task-controlers');
 const userTaskControlers = require('./controlers/user-task-controlers');
+const tracksControlers = require('./controlers/track-controlers');
 
 const app = express();
 
@@ -49,6 +50,12 @@ app.put('/api/user/task', userTaskControlers.setTaskStatus);
 app.post('/api/user/task/add/:tid', userTaskControlers.addTaskToUser);
 
 app.get('/api/task/users/:tid', userTaskControlers.getAssignedUsers);
+
+// ! USER_TRACKS
+
+app.post('/api/track/create', tracksControlers.addtUserTrack);
+
+app.get('/api/user/tracks/:pid', tracksControlers.getUserTracks);
 
 const port = process.env.PORT || 5000;
 
