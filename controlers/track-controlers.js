@@ -1,5 +1,9 @@
 const Track = require('../models/track');
-const convertTrackData = require('../utils/convertTrackData')
+const Profile = require('../models/profile');
+const Task = require('../models/task');
+const convertTrackData = require('../utils/convertTrackData');
+const checkIfFulfilled = require('../utils/checkIfFulfilled');
+
 const addtUserTrack  = async (req, res, next) => {
   const {
     UserId,
@@ -27,7 +31,23 @@ const addtUserTrack  = async (req, res, next) => {
 };
 
 const getUserTracks  = async (req, res, next) => {
-  console.log('do some things');
+  const UserId = req.params.pid;
+  let allTracks;
+
+  try {
+    const tracks = await Track.find({ UserId }).exec();
+    const { Name: UserName } = await Profile.findById(UserId, 'Name');
+    const convertedTracks = tracks.map( async (track) => {
+      const convertedData = convertTrackData(track);
+      const { Name: TaskName } = await Task.findById(convertedData.TaskId, 'Name').exec();
+      return { ...convertedData, UserName, TaskName };
+    });
+    allTracks = await Promise.allSettled(convertedTracks);
+  } catch (error) {
+    return next(error);
+  }
+
+  await res.json(checkIfFulfilled(allTracks));
 };
 
 exports.addtUserTrack = addtUserTrack;

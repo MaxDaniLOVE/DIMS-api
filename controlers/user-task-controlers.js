@@ -1,6 +1,7 @@
 const UserTask = require('../models/userTask');
 const Task = require('../models/task');
 const convertUserTaskData = require('../utils/convertUserTaskData');
+const checkIfFulfilled = require('../utils/checkIfFulfilled');
 
 const getUserTasks = async (req, res, next) => {
   const UserId = req.params.pid;
@@ -17,12 +18,12 @@ const getUserTasks = async (req, res, next) => {
       return convertedTask;
     });
 
-    userTasks = await Promise.all(convertedTasks);
+    userTasks = await Promise.allSettled(convertedTasks);
   } catch (error) {
     return next(error);
   }
 
-  res.json(userTasks);
+  res.json(checkIfFulfilled(userTasks));
 };
 
 const setTaskStatus = async (req, res, next) => {
