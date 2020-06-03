@@ -57,6 +57,10 @@ app.post('/api/track/create', tracksControlers.addtUserTrack);
 
 app.get('/api/user/tracks/:pid', tracksControlers.getUserTracks);
 
+app.put('/api/user/tracks', tracksControlers.editTracks);
+
+app.delete('/api/user/tracks/delete/:tid', tracksControlers.deleteTrack);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

@@ -50,5 +50,31 @@ const getUserTracks  = async (req, res, next) => {
   await res.json(checkIfFulfilled(allTracks));
 };
 
+const editTracks  = async (req, res, next) => {
+  const { TaskTrackId, ...updatedData } = req.body;
+
+  try {
+    await Track.findByIdAndUpdate(TaskTrackId, updatedData, { runValidators: true });
+  } catch (error) {
+    return next(error);
+  }
+
+  res.json({ message: `successfully update track with id ${TaskTrackId}` });
+};
+
+const deleteTrack  = async (req, res, next) => {
+  const taskTrackId = req.params.tid; 
+
+  try {
+    await Track.findByIdAndDelete(taskTrackId);
+  } catch (error) {
+    return next(error);
+  }
+
+  res.json({ message: `successfully delete track with id ${taskTrackId}` });
+};
+
 exports.addtUserTrack = addtUserTrack;
 exports.getUserTracks = getUserTracks;
+exports.editTracks = editTracks;
+exports.deleteTrack = deleteTrack;
