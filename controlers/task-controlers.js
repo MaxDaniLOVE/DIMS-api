@@ -1,4 +1,6 @@
 const Task = require('../models/task');
+const Track = require('../models/track');
+const UserTask = require('../models/userTask');
 const convertTaskData = require('../utils/convertTaskData')
 
 const createTask  = async (req, res, next) => {
@@ -55,15 +57,19 @@ const getTaskById = async (req, res, next) => {
 };
 
 const deleteTaskById = async (req, res, next) => {
-  const taskId = req.params.tid; 
+  const TaskId = req.params.tid; 
 
   try {
-    await Task.findByIdAndDelete(taskId);
+    await Task.findByIdAndDelete(TaskId);
+    const tracksToDelete = await Track.find({ TaskId }, '_id');
+    const tasksToDelete = await UserTask.find({ TaskId }, '_id');
+    tracksToDelete.map( async ({ _id }) => await Track.findByIdAndDelete(_id));
+    tasksToDelete.map( async ({ _id }) => await UserTask.findByIdAndDelete(_id));
   } catch (error) {
     return next(error);
   }
   
-  res.json({ message: `successfully delete task with id ${taskId}` });
+  res.json({ message: `successfully delete task with id ${TaskId}` });
 };
 
 const editTask = async (req, res, next) => {
