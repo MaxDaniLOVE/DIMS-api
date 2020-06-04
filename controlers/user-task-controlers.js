@@ -4,6 +4,7 @@ const convertUserTaskData = require('../utils/convertUserTaskData');
 const checkIfFulfilled = require('../utils/checkIfFulfilled');
 const fetchAssignedUsers = require('../utils/fetchAssignedUsers');
 const createTaskAndTrack = require('../utils/createTaskAndTrack');
+const splitAssignArray = require('../utils/splitAssignArray');
 
 const getUserTasks = async (req, res, next) => {
   const UserId = req.params.pid;
@@ -48,20 +49,21 @@ const setTaskStatus = async (req, res, next) => {
 
 const addTaskToUser  = async (req, res, next) => {
   const TaskId = req.params.tid;
-  const usersIds = req.body;
-
+  const usersToAssign = req.body;
+  const alreadyAssignedUsers = await fetchAssignedUsers(TaskId);
+  const { unassignedUsers, usersToUnassign } = splitAssignArray(alreadyAssignedUsers, usersToAssign);
   try {
-    usersIds.map(async (UserId) => {
-      const isExists = await UserTask.exists({ TaskId, UserId });
-      if (isExists) {
-        return null;
-      }
+    unassignedUsers.map(async (UserId) => {
       await createTaskAndTrack(UserId, TaskId);
+    });
+    usersToUnassign.map(async (UserId) => {
+      console.log(UserId)
+      await UserTask.findOneAndDelete({ UserId });
     })
   } catch (error) {
     return next(error);
   }
-  
+
   res.json({ message: "all users recieve new tasks with status 'Active'" });
 };
 
