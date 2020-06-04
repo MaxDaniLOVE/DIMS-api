@@ -2,6 +2,8 @@ const UserTask = require('../models/userTask');
 const Task = require('../models/task');
 const convertUserTaskData = require('../utils/convertUserTaskData');
 const checkIfFulfilled = require('../utils/checkIfFulfilled');
+const fetchAssignedUsers = require('../utils/fetchAssignedUsers');
+const createTaskAndTrack = require('../utils/createTaskAndTrack');
 
 const getUserTasks = async (req, res, next) => {
   const UserId = req.params.pid;
@@ -54,8 +56,7 @@ const addTaskToUser  = async (req, res, next) => {
       if (isExists) {
         return null;
       }
-      const createdUserTask = new UserTask({ UserId, TaskId, StatusId: 1 });
-      await createdUserTask.save();
+      await createTaskAndTrack(UserId, TaskId);
     })
   } catch (error) {
     return next(error);
@@ -66,18 +67,15 @@ const addTaskToUser  = async (req, res, next) => {
 
 const getAssignedUsers  = async (req, res, next) => {
   const TaskId = req.params.tid;
-
-  let result;
+  let assignedUsers;
 
   try {
-    result = await UserTask.find({ TaskId }, 'UserId').exec();
+    assignedUsers = await fetchAssignedUsers(TaskId);
   } catch (error) {
     return next(error);
   }
 
-  const assignedUser = result.map(({ UserId }) => UserId);
-
-  res.json(assignedUser);
+  res.json(assignedUsers);
 };
 
 exports.getUserTasks = getUserTasks;
