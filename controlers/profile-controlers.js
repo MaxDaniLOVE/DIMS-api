@@ -1,4 +1,5 @@
 const convertProfileData = require('../utils/convertProfileData');
+const deleteRelativeData = require('../utils/deleteRelativeData');
 const Profile = require('../models/profile');
 
 const createProfile  = async (req, res, next) => {
@@ -76,6 +77,7 @@ const deleteProfileById = async (req, res, next) => {
 
   try {
     await Profile.findByIdAndDelete(profileId);
+    await deleteRelativeData(profileId, true);
   } catch (error) {
     return next(error);
   };

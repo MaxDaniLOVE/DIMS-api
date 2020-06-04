@@ -1,6 +1,5 @@
 const Task = require('../models/task');
-const Track = require('../models/track');
-const UserTask = require('../models/userTask');
+const deleteRelativeData = require('../utils/deleteRelativeData');
 const convertTaskData = require('../utils/convertTaskData')
 
 const createTask  = async (req, res, next) => {
@@ -61,10 +60,7 @@ const deleteTaskById = async (req, res, next) => {
 
   try {
     await Task.findByIdAndDelete(TaskId);
-    const tracksToDelete = await Track.find({ TaskId }, '_id');
-    const tasksToDelete = await UserTask.find({ TaskId }, '_id');
-    tracksToDelete.map( async ({ _id }) => await Track.findByIdAndDelete(_id));
-    tasksToDelete.map( async ({ _id }) => await UserTask.findByIdAndDelete(_id));
+    await deleteRelativeData(TaskId);
   } catch (error) {
     return next(error);
   }
