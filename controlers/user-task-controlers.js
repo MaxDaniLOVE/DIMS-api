@@ -57,8 +57,7 @@ const addTaskToUser  = async (req, res, next) => {
       await createTaskAndTrack(UserId, TaskId);
     });
     usersToUnassign.map(async (UserId) => {
-      console.log(UserId)
-      await UserTask.findOneAndDelete({ UserId });
+      await UserTask.findOneAndDelete({ UserId, TaskId });
     })
   } catch (error) {
     return next(error);
