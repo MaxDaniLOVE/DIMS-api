@@ -110,9 +110,24 @@ const getProfileDetails = async (req, res, next) => {
   res.json(convertProfileData(profile));
 };
 
+const isProfileExists = async (req, res, next) => {
+  const Email = req.params.email; 
+  let isExists;
+
+  try {
+    const counter = await Profile.countDocuments({ Email }).exec();
+    isExists = counter ? true : false;
+  } catch (error) {
+    return next(error);
+  };
+
+  res.json(isExists);
+};
+
 exports.createProfile = createProfile;
 exports.getProfiles = getProfiles;
 exports.getProfileById = getProfileById;
 exports.deleteProfileById = deleteProfileById;
 exports.editProfile = editProfile;
 exports.getProfileDetails = getProfileDetails;
+exports.isProfileExists = isProfileExists;
