@@ -30,6 +30,8 @@ app.put('/api/profile/edit/:pid', profileControlers.editProfile);
 
 app.get('/api/profile/details/:pid', profileControlers.getProfileDetails);
 
+app.get('/api/profile/exists/:email', profileControlers.isProfileExists);
+
 // ! TASKS
 app.post('/api/task/create', taskControlers.createTask);
 
