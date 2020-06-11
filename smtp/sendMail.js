@@ -13,16 +13,22 @@ const sendMail = async (req, res, next) => {
     }
   });
 
-  let result;
+  let toAuthor;
+  let toCustomer;
 
   try {
-    result = await sendMailToAuthor(transporter, body);
-    result = await sendMailToCustomer(transporter, body);
+    toAuthor = await sendMailToAuthor(transporter, body);
+  } catch (error) {
+    return next(error);
+  };
+
+  try {
+    toCustomer = await sendMailToCustomer(transporter, body);
   } catch (error) {
     return next(error);
   }
   
-  res.json(result);
+  res.json({ toAuthor, toCustomer });
 };
 
 module.exports = sendMail;

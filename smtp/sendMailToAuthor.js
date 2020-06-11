@@ -1,11 +1,14 @@
 const sendMailToAuthor = async (transporter, body) => {
-  const { text, sender } = body;
+  const { message, email, fullName } = body;
 
   const result = await transporter.sendMail({
-    from: `${sender} <${process.env.EMAIL}>`,
+    from: `${email} <${process.env.EMAIL}>`,
     to: process.env.EMAIL,
-    subject: 'SOMEONE WANT TO HIRE YOU!',
-    text,
+    subject: `${fullName.toUpperCase()} WANTS TO HIRE YOU!`,
+    text: `
+      Message: ${message}
+      Email: ${email}
+    `,
   });
 
   return result;
