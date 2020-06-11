@@ -5,7 +5,7 @@ const profileControlers = require('./controlers/profile-controlers');
 const taskControlers = require('./controlers/task-controlers');
 const userTaskControlers = require('./controlers/user-task-controlers');
 const tracksControlers = require('./controlers/track-controlers');
-const sendMail = require('./utils/sendMail');
+const sendMail = require('./smtp/sendMail');
 
 const app = express();
 
