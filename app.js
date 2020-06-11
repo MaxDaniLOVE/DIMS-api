@@ -5,6 +5,7 @@ const profileControlers = require('./controlers/profile-controlers');
 const taskControlers = require('./controlers/task-controlers');
 const userTaskControlers = require('./controlers/user-task-controlers');
 const tracksControlers = require('./controlers/track-controlers');
+const sendMail = require('./utils/sendMail');
 
 const app = express();
 
@@ -62,6 +63,9 @@ app.get('/api/user/tracks/:pid', tracksControlers.getUserTracks);
 app.put('/api/user/tracks', tracksControlers.editTracks);
 
 app.delete('/api/user/tracks/delete/:tid', tracksControlers.deleteTrack);
+
+// ! SEND MAIL
+app.get('/api/intouch', sendMail);
 
 const port = process.env.PORT || 5000;
 
