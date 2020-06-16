@@ -123,19 +123,88 @@ Response for `/profile/5ee8b70338f5070004b3b42a`:
 
 ### Delete profile by id
 
-`/profile/delete/profile_id`
+Method: **DELETE**;
+
+Route: `/profile/delete/profile_id`
+
+Response for `/profile/delete/5ee8b70338f5070004b3b42a`:
+
+```json
+{
+    "message": "successfully delete user with id 5ee8b70338f5070004b3b42a"
+}
+```
 
 ### Edit profile by id
 
-`/profile/edit/profile_id`
+Method: **PUT**;
+
+Route: `/profile/edit/profile_id`;
+
+Body:
+```json
+{
+    "Name": "John",
+    "LastName": "Carpenter",
+    "Email": "anothermail@gmail.com",
+    "DirectionId": 2,
+    "Sex": "M",
+    "Education": "BSU",
+    "BirthDate": "1920-01-02",
+    "UniversityAverageScore": 10,
+    "MathScore": 10,
+    "Address": "Another address",
+    "MobilePhone": "+375335783285",
+    "Skype": "johndoe1940",
+    "StartDate": "1940-03-25"
+}
+```
+
+Response for `/profile/edit/5ee8b70338f5070004b3b42a`:
+
+```json
+{
+    "message": "successfully update user with id 5ee8b70338f5070004b3b42a"
+}
+```
 
 ### Get profile details by id
 
-`/profile/details/profile_id`
+Method: **GET**;
+
+Route: `/profile/details/profile_id`
+
+Response for `/profile/details/5ee8b70338f5070004b3b42a`:
+
+```json
+{
+    "UserId": "5ee8b70338f5070004b3b42a",
+    "FullName": "John Carpenter",
+    "Direction": ".Net",
+    "Email": "anothermail@gmail.com",
+    "Sex": "M",
+    "Education": "BSU",
+    "BirthDate": "1920-01-02",
+    "UniversityAverageScore": 10,
+    "MathScore": 10,
+    "Address": "Another address",
+    "MobilePhone": "+375335783285",
+    "Skype": "johndoe1940",
+    "StartDate": "1940-03-25"
+}
+```
 
 ### Check if profile exists by email
 
-`/profile/exists/profile_email`
+Method: **GET**;
+
+Route: `/profile/exists/profile_email`
+
+Response for `/profile/exists/anothermail@gmail.com`:
+
+```json
+true
+```
 
 ## <a name="TASKS"></a>  Tasks features
 
