@@ -208,15 +208,87 @@ true
 
 ## <a name="TASKS"></a>  Tasks features
 
+### Create new task
 
+Method: **POST**;
+
+Route: `/task/create`
+
+### Get all tasks
+
+Method: **GET**;
+
+Route: `/tasks`
+
+### Get task by id
+
+Method: **GET**;
+
+Route: `/task/task_id`
+
+### Delete task by id
+
+Method: **DELETE**;
+
+Route: `/task/delete/task_id`
+
+### Edit task by id
+
+Method: **PUT**;
+
+Route: `/task/edit`
 
 ## <a name="USER_TASKS"></a>  User tasks features
 
+### Get user task by profile id
 
+Method: **GET**;
+
+Route: `/user/tasks/profile_id`
+
+### Set task status
+
+Method: **PUT**;
+
+Route: `/user/task`
+
+### Add task to user
+
+Method: **POST**;
+
+Route: `/user/task/add/task_id`
+
+### Get task's assigned users
+
+Method: **GET**;
+
+Route: `/task/users/task_id`
 
 ## <a name="USER_TRACKS"></a>  User tracks features
 
+### Create user track
 
+Method: **POST**;
+
+Route: `/track/create`
+
+### Get users's tracks by profile id
+
+Method: **GET**;
+
+Route: `/user/tracks/profile_id`
+
+### Edit users's track
+
+Method: **PUT**;
+
+Route: `/user/tracks`
+
+### Delete users's track by track id
+
+Method: **DELETE**;
+
+Route: `/user/tracks/delete/track_id`
 
 ## <a name="MAIL"></a> Sending mail feature
 
