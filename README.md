@@ -232,7 +232,7 @@ Method: **DELETE**;
 
 Route: `/task/delete/task_id`
 
-### Edit task by id
+### Edit task
 
 Method: **PUT**;
 
@@ -252,7 +252,7 @@ Method: **PUT**;
 
 Route: `/user/task`
 
-### Add task to user
+### Add task to users
 
 Method: **POST**;
 
@@ -292,4 +292,15 @@ Route: `/user/tracks/delete/track_id`
 
 ## <a name="MAIL"></a> Sending mail feature
 
+Method: **POST**;
 
+Route: `/intouch`
+
+Body:
+```json
+{
+	  "fullName": "John Woods",
+	  "email": "mahseeen@gmail.com",
+    "message": "HEY! WE WANT TO HIRE YOU!"
+}
+```
