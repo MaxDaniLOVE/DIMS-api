@@ -7,7 +7,7 @@ const sendMailToCustomer = async (transporter, body) => {
     subject: 'It looks like you want to hire me!',
     text: `
       Hi, ${fullName}!
-      I've recieved your message and I will right you back as soon as it possible!
+      I've recieved your message and I will write you back as soon as it possible!
       If you have urgent questions, just call me +375291371931.
       Regards, Maks Danilau!
     `,
