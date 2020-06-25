@@ -65,7 +65,9 @@ app.put('/api/user/tracks', tracksControlers.editTracks);
 app.delete('/api/user/tracks/delete/:tid', tracksControlers.deleteTrack);
 
 // ! SEND MAIL
-app.post('/api/intouch', sendMail);
+app.post('/api/intouch', sendMail.sendAuthorMail);
+
+app.post('/api/notify_user', sendMail.sendUserMail);
 
 const port = process.env.PORT || 5000;
 

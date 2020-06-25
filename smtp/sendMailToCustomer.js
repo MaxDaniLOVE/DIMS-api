@@ -1,4 +1,6 @@
-const sendMailToCustomer = async (transporter, body) => {
+const transporter = require('./transporter');
+
+const sendMailToCustomer = async (body) => {
   const { email, fullName } = body;
 
   const result = await transporter.sendMail({
