@@ -1,29 +1,22 @@
-const nodemailer = require('nodemailer');
 const sendMailToAuthor = require('./sendMailToAuthor');
 const sendMailToCustomer = require('./sendMailToCustomer');
+const sendMailToUser = require('./sendMailToUser');
+const transporter = require('./transporter');
 
-const sendMail = async (req, res, next) => {
+const sendAuthorMail = async (req, res, next) => {
   const { body } = req;
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
-  });
 
   let toAuthor;
   let toCustomer;
 
   try {
-    toAuthor = await sendMailToAuthor(transporter, body);
+    toAuthor = await sendMailToAuthor(body);
   } catch (error) {
     return next(error);
   };
 
   try {
-    toCustomer = await sendMailToCustomer(transporter, body);
+    toCustomer = await sendMailToCustomer(body);
   } catch (error) {
     return next(error);
   }
@@ -31,4 +24,19 @@ const sendMail = async (req, res, next) => {
   res.json({ toAuthor, toCustomer });
 };
 
-module.exports = sendMail;
+const sendUserMail = async (req, res, next) => {
+  const { body } = req;
+
+  let toUser;
+
+  try {
+    toUser = await sendMailToUser(body);
+  } catch (error) {
+    return next(error);
+  };
+  
+  res.json({ toUser });
+};
+
+exports.sendAuthorMail = sendAuthorMail;
+exports.sendUserMail = sendUserMail;
