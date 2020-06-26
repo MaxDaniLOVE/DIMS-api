@@ -10,8 +10,9 @@ const sendMailToUser = async (body) => {
     text: `
       Hi, ${name}!
       You've been added to DIMS!
-      Default password: ${password}
-      Link: https://dims-5.netlify.app/email:${email},pass:${password}
+      Use default password <${password}> to sign-in the Dev-Incubator managment system.
+      You can always change your password by clicking your login, when you're signed-in.
+      Link: https://dims-5.netlify.app/
     `,
   });
 
