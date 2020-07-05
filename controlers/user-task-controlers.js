@@ -13,10 +13,10 @@ const getUserTasks = async (req, res, next) => {
   try {
     const tasks = await UserTask.find({ UserId }).exec();
 
-    const convertedTasks = tasks.map(async ({ _doc: { TaskId, ...userTaskData } }) => {
+    const convertedTasks = tasks.map(async ({ _doc: { TaskId, ...userTaskData }, _id: UserTaskId }) => {
       const taskData = await Task.findById(TaskId).exec();
       const { Name: TaskName, ...data } = taskData._doc;
-      const fullTaskData = { TaskName, UserId, TaskId, ...data, ...userTaskData };
+      const fullTaskData = { TaskName, UserId, TaskId, UserTaskId, ...data, ...userTaskData };
       const convertedTask = convertUserTaskData(fullTaskData);
       return convertedTask;
     });
